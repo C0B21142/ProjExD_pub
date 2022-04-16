@@ -3,9 +3,9 @@ import random
 NUM_OF_QUES = 3
 
 def shutudai():
-    q, a_list = random.choice(list(qa_dict.items()))
-    print(q)
-    return a_list
+    qa = random.choice(qa_dict_list)
+    print(q["q"])
+    return qa["a"]
 
 def kaito(a_list):
     kaito = input()
@@ -19,5 +19,5 @@ def main():
     kaito(a_list)
 
 if __name__ == "__main__":
-    qa_dict = {"サザエの旦那の名前は？": ["マスオ", "ますお"], "カツオの妹の名前は？": ["ワカメ", "わかめ"], "タラオはカツオから見てどんな関係？": ["甥", "おい", "甥っ子", "おいっこ"]}
+    qa_dict_list = [{"q": "サザエの旦那の名前は？", "a": ["マスオ", "ますお"]}, {"q": "カツオの妹の名前は？", "a": ["ワカメ", "わかめ"]}, {"q": "タラオはカツオから見てどんな関係？", "a": ["甥", "おい", "甥っ子", "おいっこ"]}]
     main()
