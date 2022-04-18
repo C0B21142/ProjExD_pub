@@ -13,7 +13,7 @@ def main():
     for i, btn in enumerate(buttons):
         if i%3 == 0:
             r, c = r+1, 0
-        btn.grid(row=r, column=c)
+        btn.grid(row=r, column=c, padx=10, pady=10)
         c += 1
     root.mainloop()
 
