@@ -9,11 +9,15 @@ def click_button(event):
 if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("300x450")
-    frm = tk.Frame(root)
-    
+    entry = tk.Entry(root, justify="right", width="10", font=("Times New Roman", 40))
+    entry.pack()
+
+    frame = tk.Frame(root)
+    frame.pack()
+
     buttons = []
     for i in range(9, -1, -1):
-        btn = tk.Button(root, text=f"{i}", font=("Times New Roman", 30))
+        btn = tk.Button(frame, text=f"{i}", font=("Times New Roman", 30))
         btn.bind("<1>", click_button)
         buttons.append(btn)
     r, c = 0, 0
