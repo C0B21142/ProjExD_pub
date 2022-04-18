@@ -5,7 +5,7 @@ def main():
     root.geometry("300x450")
     buttons = []
     for i in range(10):
-        btn = tk.Button(root, text=f"{i}")
+        btn = tk.Button(root, text=f"{i}", font=("Times New Roman", 30))
         buttons.append(btn)
     for btn in buttons:
         btn.pack()
