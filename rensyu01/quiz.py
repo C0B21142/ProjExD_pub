@@ -1,23 +1,20 @@
 import random
 
-NUM_OF_QUES = 3
-
 def shutudai():
-    qa = random.choice(qa_dict_list)
-    print(q["q"])
+    qa = random.choice(qa_list)
+    print("じゃじゃん：", qa["q"])
     return qa["a"]
 
-def kaito(a_list):
-    kaito = input()
-    if kaito in a_list:
-        print("正解")
+def kaito(a_lst):
+    kai = input("答えを入力してください：")
+    print("入力した答えは：", kai)
+    if kai in a_lst:
+        print("正解でーす！！！！")
     else:
-        print("不正解")
+        print("出直してこい")
 
-def main():
-    a_list = shutudai()
-    kaito(a_list)
 
 if __name__ == "__main__":
-    qa_dict_list = [{"q": "サザエの旦那の名前は？", "a": ["マスオ", "ますお"]}, {"q": "カツオの妹の名前は？", "a": ["ワカメ", "わかめ"]}, {"q": "タラオはカツオから見てどんな関係？", "a": ["甥", "おい", "甥っ子", "おいっこ"]}]
-    main()
+    qa_list = [{"q": "サザエさんの旦那の名前は？", "a": ["ますお", "マスオ"]}, {"q": "カツオの妹の名前は？", "a": ["わかめ", "ワカメ"]}, {"q": "タラオはカツオから見てどんな関係？", "a": ["甥", "おい", "おいっこ", "甥っ子"]}]
+    a_list = shutudai()
+    kaito(a_list)
