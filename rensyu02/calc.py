@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.messagebox as tkmb
+import math
 
 def click_button(event):
     btn = event.widget
@@ -20,6 +21,13 @@ def click_clear_one(event):
 
 def click_clear_all(event):
     entry.delete(0, tk.END)
+
+def click_sqrt(event):
+    btn = event.widget
+    eqn = entry.get()
+    res = math.sqrt(eval(eqn))
+    entry.delete(0, tk.END)
+    entry.insert(tk.END, res)
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -47,4 +55,8 @@ if __name__ == "__main__":
     btn.bind("<1>", click_clear_all)
     btn.grid(row=6, column=1, padx=10, pady=10)
     
+    btn = tk.Button(root, text="√", font=("Times New Roman", 30))
+    btn.bind("<1>", click_sqrt)
+    btn.grid(row=5, column=3, padx=10, pady=10)
+
     root.mainloop()
