@@ -15,20 +15,20 @@ def click_equal(event):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.geometry("300x450")
-    entry = tk.Entry(root, justify="right", width="10", font=("Times New Roman", 40))
-    entry.grid(row=0, column=0, padx=10, pady=10, columnspan=3)
+    root.geometry("430x520")
+    entry = tk.Entry(root, justify="right", width="15", font=("Times New Roman", 40))
+    entry.grid(row=0, column=0, padx=5, pady=10, columnspan=4)
 
     r, c = 1, 0
-    for i, num in enumerate(["7","8","9","÷","4","5","6","×","1","2","3","-","0","+"]):
+    for i, num in enumerate(["7","8","9","÷","4","5","6","×","1","2","3","-","0",".","+"]):
         btn = tk.Button(root, text=f"{num}", font=("Times New Roman", 30))
         btn.bind("<1>", click_button)
-        if i%3 == 0:
+        if i%4 == 0:
             r, c = r+1, 0
-        btn.grid(row=r, column=c, padx=10, pady=10)
+        btn.grid(row=r, column=c, padx=5, pady=10)
         c += 1
     btn = tk.Button(root, text="=", font=("Times New Roman", 30))
     btn.bind("<1>", click_equal)
-    btn.grid(row=5, column=2, padx=10, pady=10)
+    btn.grid(row=5, column=3, padx=5, pady=10)
 
     root.mainloop()
