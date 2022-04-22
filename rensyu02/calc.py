@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.messagebox as tkmb
+import math
 
 def click_button(event):
     btn = event.widget
@@ -10,6 +11,13 @@ def click_equal(event):
     btn = event.widget
     eqn = entry.get()
     res = eval(eqn)
+    entry.delete(0, tk.END)
+    entry.insert(tk.END, res)
+
+def click_sqrt(event):
+    btn = event.widget
+    eqn = entry.get()
+    res = math.sqrt(eval(eqn))
     entry.delete(0, tk.END)
     entry.insert(tk.END, res)
 
@@ -30,5 +38,9 @@ if __name__ == "__main__":
     btn = tk.Button(root, text="=", font=("Times New Roman", 30))
     btn.bind("<1>", click_equal)
     btn.grid(row=5, column=2, padx=10, pady=10)
+
+    btn = tk.Button(root, text="√", font=("Times New Roman", 30))
+    btn.bind("<1>", click_sqrt)
+    btn.grid(row=5, column=3, padx=10, pady=10)
 
     root.mainloop()
