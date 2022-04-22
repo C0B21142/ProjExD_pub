@@ -18,8 +18,8 @@ def click_clear_one(event):
     entry.delete(0, tk.END)
     entry.insert(tk.END, eqn[:-1])
 
-# def click_clear_all(event):
-#     entry.delete(0, tk.END)
+def click_clear_all(event):
+    entry.delete(0, tk.END)
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -43,8 +43,8 @@ if __name__ == "__main__":
     btn.bind("<1>", click_clear_one)
     btn.grid(row=6, column=0, padx=10, pady=10)
 
-    # btn = tk.Button(root, text="AC", font=("TImes New Roman", 30))
-    # btn.bind("<1>", click_clear_all)
-    # btn.grid(row=6, column=1, padx=10, pady=10))
+    btn = tk.Button(root, text="AC", font=("TImes New Roman", 30))
+    btn.bind("<1>", click_clear_all)
+    btn.grid(row=6, column=1, padx=10, pady=10)
     
     root.mainloop()
