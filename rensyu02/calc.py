@@ -20,7 +20,7 @@ if __name__ == "__main__":
     entry.grid(row=0, column=0, padx=10, pady=10, columnspan=3)
 
     r, c = 1, 0
-    for i, num in enumerate(["7","8","9","4","5","6","1","2","3","0","+"]):
+    for i, num in enumerate(["7","8","9","÷","4","5","6","×","1","2","3","-","0","+"]):
         btn = tk.Button(root, text=f"{num}", font=("Times New Roman", 30))
         btn.bind("<1>", click_button)
         if i%3 == 0:
