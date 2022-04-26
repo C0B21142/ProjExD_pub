@@ -19,7 +19,7 @@ if __name__ == "__main__":
     entry.grid(row=0, column=0, columnspan=4)
 
     r, c = 1, 1
-    for i, num in enumerate(range(9, -1, -1), 1):
+    for i, num in enumerate([9,8,7,6,5,4,3,2,1,0,"+"], 1):
         btn = tk.Button(root, text=num, font=("Times New Roman", 30))
         btn.bind("<1>", button_click)
         btn.grid(row=r, column=c, padx=10, pady=10)
