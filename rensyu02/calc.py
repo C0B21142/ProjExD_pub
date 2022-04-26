@@ -7,6 +7,12 @@ def button_click(event):
     # tkm.showinfo(num, f"{num}のボタンがクリックされました")
     entry.insert(tk.END, num)
 
+def click_equal(event):
+    eqn = entry.get()
+    res = eval(eqn)
+    entry.delete(0, tk.END)
+    entry.insert(tk.END, str(res))
+
 if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("300x450")
@@ -27,5 +33,12 @@ if __name__ == "__main__":
             r += 1
             c = 0
         c += 1
-        
+
+    btn = tk.Button(root, 
+                    text="=", 
+                    font=("Times New Roman", 30)
+                    )
+    btn.bind("<1>", click_equal)
+    btn.grid(row=r, column=c, padx=10, pady=10)
+
     root.mainloop()
