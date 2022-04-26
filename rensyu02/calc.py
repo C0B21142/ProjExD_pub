@@ -7,7 +7,7 @@ if __name__ == "__main__":
     r, c = 0, 1
     for i, num in enumerate(range(9, -1, -1), 1):
         btn = tk.Button(root, text=num, font=("Times New Roman", 30))
-        btn.grid(row=r, column=c)
+        btn.grid(row=r, column=c, padx=10, pady=10)
         if i%3 == 0:
             r += 1
             c = 0
