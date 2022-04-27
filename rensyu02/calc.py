@@ -1,13 +1,13 @@
 import tkinter as tk
 import tkinter.messagebox as tkm
 
-def button_click(event):
+def button_click(event): # 数字ボタン，＋ボタンをクリックした際に動く関数
     btn = event.widget
     num = btn["text"]  # クリックされたボタンの数字
     # tkm.showinfo(num, f"{num}のボタンがクリックされました")
     entry.insert(tk.END, num)
 
-def click_equal(event):
+def click_equal(event): # イコールボタンをクリックした際に動く関数
     eqn = entry.get()
     res = eval(eqn)
     entry.delete(0, tk.END)
