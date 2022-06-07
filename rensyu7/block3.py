@@ -3,9 +3,10 @@ from pygame.locals import *
 import sys
 import math
 import pygame.mixer
+import random
 
 # 画面サイズ
-SCREEN = Rect(0, 0, 1600, 900)
+SCREEN = Rect(0, 0, 1290, 700)
 
 # パドルクラス
 class Paddle(pygame.sprite.Sprite):
@@ -85,7 +86,11 @@ class Ball(pygame.sprite.Sprite):
 
 
         # ボールと衝突したブロックリストを取得（Groupが格納しているSprite中から、指定したSpriteと接触しているものを探索）
+
         blocks_collided = pygame.sprite.spritecollide(self, self.blocks, True)
+
+        vy=0
+        Coin("fig/10.png", random.randint(0,1200), vy)
         if blocks_collided:  # 衝突ブロックがある場合
             oldrect = self.rect
             for block in blocks_collided:
@@ -127,6 +132,20 @@ class Block(pygame.sprite.Sprite):
         self.rect.top = SCREEN.top + y * self.rect.height
 
 
+class Coin(pygame.sprite.Sprite):
+    def __init__(self, filename, vx, vy):
+        pygame.sprite.Sprite.__init__(self, self.containers)
+        self.image = pygame.image.load(filename).convert()
+        self.image = pygame.transform.rotozoom(self.image,0,0.3)
+        self.image.set_colorkey((0,0,0))
+        self.rect = self.image.get_rect()
+        # ブロックの左上座標
+        self.rect.left = SCREEN.left + vx * self.rect.width
+        self.rect.centery = vy
+    def update(self):
+        self.rect.centery +=1
+
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode(SCREEN.size)
@@ -135,11 +154,13 @@ def main():
     group = pygame.sprite.RenderUpdates()  
 
     # 衝突判定用のスプライトグループ
-    blocks = pygame.sprite.Group()   
+    blocks = pygame.sprite.Group() 
+    coins=  pygame.sprite.Group() 
 
     # スプライトグループに追加    
     Paddle.containers = group
     Ball.containers = group
+    Coin.containers = group, blocks
     Block.containers = group, blocks
 
     # パドルの作成
