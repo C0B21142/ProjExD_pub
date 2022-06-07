@@ -13,7 +13,7 @@ class Paddle(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,2)
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect()              # 
         self.rect.bottom = SCREEN.bottom - 20          # パドルのy座標
 
     def update(self):
