@@ -2,7 +2,6 @@ import pygame
 from pygame.locals import *
 import sys
 import math
-import pygame.mixer
 import time
 
 # 画面サイズ
@@ -16,11 +15,11 @@ class Paddle(pygame.sprite.Sprite):
         self.image = pygame.transform.rotozoom(self.image,0,2)
         self.image.set_colorkey((0,0,0))                                                  #　中村太亮
         self.rect = self.image.get_rect()
-        self.rect.bottom = SCREEN.bottom - 20          # パドルのy座標
+        self.rect.bottom = SCREEN.bottom - 20                                             # パドルのy座標
 
     def update(self):
-        self.rect.centerx = pygame.mouse.get_pos()[0]  # マウスのx座標をパドルのx座標に
-        self.rect.clamp_ip(SCREEN)                     # ゲーム画面内のみで移動
+        self.rect.centerx = pygame.mouse.get_pos()[0]                                     # マウスのx座標をパドルのx座標に
+        self.rect.clamp_ip(SCREEN)                                                        # ゲーム画面内のみで移動
 
 # ボールクラス
 class Ball(pygame.sprite.Sprite):
