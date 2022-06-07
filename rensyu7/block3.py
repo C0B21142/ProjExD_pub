@@ -3,6 +3,7 @@ from pygame.locals import *
 import sys
 import math
 import pygame.mixer
+import time
 
 # 画面サイズ
 SCREEN = Rect(0, 0, 1600, 900)
@@ -13,7 +14,8 @@ class Paddle(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,2)
-        self.rect = self.image.get_rect()              # 
+        self.image.set_colorkey((0,0,0))                                                  #　中村太亮
+        self.rect = self.image.get_rect()
         self.rect.bottom = SCREEN.bottom - 20          # パドルのy座標
 
     def update(self):
@@ -130,7 +132,7 @@ class Block(pygame.sprite.Sprite):
 def main():
     pygame.init()
     screen = pygame.display.set_mode(SCREEN.size)
-
+    
     # 描画用のスプライトグループ
     group = pygame.sprite.RenderUpdates()  
 
@@ -156,6 +158,11 @@ def main():
     
     clock = pygame.time.Clock()
     
+    start = pygame.font.Font(None, 100)                             #\　ここから
+    text = start.render("START", True, (33, 157, 221))             #
+    screen.blit(text, (700, 400))                                   #　中村太亮
+    pygame.display.update()                                         #
+    time.sleep(2)                                                   #/ ここまで
 
     while (1):
         clock.tick(60)      # フレームレート(60fps)
@@ -165,6 +172,15 @@ def main():
         # 全てのスプライトグループを描画       
         group.draw(screen)
         # 画面更新 
+        
+        if len(blocks) == 90:                                       #\　ここから
+            clear = pygame.font.Font(None, 100)                    # 
+            text = clear.render("GAME CLEAR", True, (63, 255, 63)) #  中村太亮
+            screen.blit(text, (580, 450))                          #
+            pygame.display.update()                                #
+            time.sleep(3)                                          #/　ここまで
+            return
+
         pygame.display.update()
         # キーイベント（終了）
         for event in pygame.event.get():
@@ -174,9 +190,6 @@ def main():
             if event.type == KEYDOWN and event.key == K_ESCAPE:
                 pygame.quit()
                 sys.exit()
-
-
-            
 
 if __name__ == "__main__":
     main()
