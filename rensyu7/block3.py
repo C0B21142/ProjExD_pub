@@ -54,10 +54,8 @@ class Ball(pygame.sprite.Sprite):
     def move(self):
         self.rect.centerx += self.dx
         self.rect.centery += self.dy
-        hp =3
-
         # 壁との反射
-        
+
         if self.rect.left < SCREEN.left:    # 左側
             self.rect.left = SCREEN.left
             self.dx = -self.dx              # 速度を反転
@@ -80,21 +78,19 @@ class Ball(pygame.sprite.Sprite):
 
         if self.rect.top > SCREEN.bottom:
             self.update = self.start                    # ボールを初期状態に
-            hp -= 1
+            hp = 3 - 1
             if hp == 0:
                 return
 
 
-        # ボールと衝突したブロックリストを取得（Groupが格納しているSprite中から、指定したSpriteと接触しているものを探索）
-        blocks_collided = pygame.sprite.spritecollide(self, self.blocks, True)
-        if blocks_collided:  # 衝突ブロックがある場合
+        if blocks_collided := pygame.sprite.spritecollide(self, self.blocks, True):
             oldrect = self.rect
             for block in blocks_collided:
                 # ボールが左からブロックへ衝突した場合
                 if oldrect.left < block.rect.left and oldrect.right < block.rect.right:
                     self.rect.right = block.rect.left
                     self.dx = -self.dx
-                    
+
                 # ボールが右からブロックへ衝突した場合
                 if block.rect.left < oldrect.left and block.rect.right < oldrect.right:
                     self.rect.left = block.rect.right
