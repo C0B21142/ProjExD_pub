@@ -3,6 +3,7 @@ from pygame.locals import *
 import sys
 import math
 import pygame.mixer
+import time
 
 # 画面サイズ
 SCREEN = Rect(0, 0, 1600, 900)
@@ -13,6 +14,7 @@ class Paddle(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,2)
+        self.image.set_colorkey((0,0,0))                                                  #　中村太亮
         self.rect = self.image.get_rect()
         self.rect.bottom = SCREEN.bottom - 20          # パドルのy座標
 
@@ -26,7 +28,6 @@ class Ball(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,0.2)
-        self.image.set_colorkey((255, 255, 255))    #C0B21094 colorkeyを設定
         self.rect = self.image.get_rect()
         self.dx = self.dy = 0  # ボールの速度
         self.paddle = paddle  # パドルへの参照
@@ -122,7 +123,6 @@ class Block(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,0.3)
-        self.image.set_colorkey((255, 255, 255))    # C0B21094 ブロックにcolorkeyを設定
         self.rect = self.image.get_rect()
         # ブロックの左上座標
         self.rect.left = SCREEN.left + x * self.rect.width
@@ -132,11 +132,7 @@ class Block(pygame.sprite.Sprite):
 def main():
     pygame.init()
     screen = pygame.display.set_mode(SCREEN.size)
-    #C0B21094 背景画像を設定
-    bg_img = pygame.image.load("fig/toQtorisakjuR.jpg")
-    bg_rect = bg_img.get_rect()
-    screen.blit(bg_img, bg_rect)
-
+    
     # 描画用のスプライトグループ
     group = pygame.sprite.RenderUpdates()  
 
@@ -162,17 +158,29 @@ def main():
     
     clock = pygame.time.Clock()
     
+    start = pygame.font.Font(None, 100)                             #\　ここから
+    text = start.render("START", True, (33, 157, 221))             #
+    screen.blit(text, (700, 400))                                   #　中村太亮
+    pygame.display.update()                                         #
+    time.sleep(2)                                                   #/ ここまで
 
     while (1):
         clock.tick(60)      # フレームレート(60fps)
-        # 背景真っ白から鳥取砂丘に
-        # screen.fill((255,255,255))
-        screen.blit(bg_img, bg_rect)
+        screen.fill((255,255,255))
         # 全てのスプライトグループを更新
         group.update()
         # 全てのスプライトグループを描画       
         group.draw(screen)
         # 画面更新 
+        
+        if len(blocks) == 90:                                       #\　ここから
+            clear = pygame.font.Font(None, 100)                    # 
+            text = clear.render("GAME CLEAR", True, (63, 255, 63)) #  中村太亮
+            screen.blit(text, (580, 450))                          #
+            pygame.display.update()                                #
+            time.sleep(3)                                          #/　ここまで
+            return
+
         pygame.display.update()
         # キーイベント（終了）
         for event in pygame.event.get():
