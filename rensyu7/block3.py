@@ -159,8 +159,8 @@ def main():
     clock = pygame.time.Clock()
     
     start = pygame.font.Font(None, 100)                             #\　ここから
-    text = start.render("start", True, (240, 128, 128))             #
-    screen.blit(text, (700, 450))                                   #　中村太亮
+    text = start.render("START", True, (240, 128, 128))             #
+    screen.blit(text, (700, 400))                                   #　中村太亮
     pygame.display.update()                                         #
     time.sleep(2)                                                   #/ ここまで
 
@@ -172,10 +172,10 @@ def main():
         # 全てのスプライトグループを描画       
         group.draw(screen)
         # 画面更新 
-        if len(blocks) == 90:                                      #\　ここから
+        if len(blocks) == 0:                                       #\　ここから
             clear = pygame.font.Font(None, 100)                    # 
             text = clear.render("GAME CLEAR", True, (63, 255, 63)) #  中村太亮
-            screen.blit(text, (700, 450))                          #
+            screen.blit(text, (600, 450))                          #
             pygame.display.update()                                #
             time.sleep(3)                                          #/　ここまで
             return
