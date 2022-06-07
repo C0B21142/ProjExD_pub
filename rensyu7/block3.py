@@ -27,6 +27,7 @@ class Ball(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,0.2)
+        self.image.set_colorkey((255, 255, 255))    #C0B21094 colorkeyを設定
         self.rect = self.image.get_rect()
         self.dx = self.dy = 0  # ボールの速度
         self.paddle = paddle  # パドルへの参照
@@ -127,6 +128,7 @@ class Block(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,0.3)
+        self.image.set_colorkey((255, 255, 255))    # C0B21094 ブロックにcolorkeyを設定
         self.rect = self.image.get_rect()
         # ブロックの左上座標
         self.rect.left = SCREEN.left + x * self.rect.width
@@ -150,6 +152,10 @@ class Coin(pygame.sprite.Sprite):
 def main():
     pygame.init()
     screen = pygame.display.set_mode(SCREEN.size)
+    #C0B21094 背景画像を設定
+    bg_img = pygame.image.load("fig/toQtorisakjuR.jpg")
+    bg_rect = bg_img.get_rect()
+    screen.blit(bg_img, bg_rect)
 
     # 描画用のスプライトグループ
     group = pygame.sprite.RenderUpdates()  
@@ -183,6 +189,9 @@ def main():
         clock.tick(60)      # フレームレート(60fps)
         screen.fill((255,255,255))
         
+        # 背景真っ白から鳥取砂丘に
+        # screen.fill((255,255,255))
+        screen.blit(bg_img, bg_rect)
         # 全てのスプライトグループを更新
         group.update()
         # 全てのスプライトグループを描画       
