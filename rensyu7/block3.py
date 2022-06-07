@@ -23,7 +23,7 @@ class Paddle(pygame.sprite.Sprite):
 
 # ボールクラス
 class Ball(pygame.sprite.Sprite):
-    def __init__(self, filename, paddle, blocks, speed,angle_left, angle_right):
+    def __init__(self, filename, paddle, blocks,coins, speed,angle_left, angle_right):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,0.2)
@@ -31,6 +31,7 @@ class Ball(pygame.sprite.Sprite):
         self.dx = self.dy = 0  # ボールの速度
         self.paddle = paddle  # パドルへの参照
         self.blocks = blocks  # ブロックグループへの参照
+        self.coins  = coins
         self.update = self.start # ゲーム開始状態に更新
         self.speed = speed # ボールの初期速度
         self.angle_left = angle_left # パドルの反射方向(左端:135度）
@@ -88,9 +89,11 @@ class Ball(pygame.sprite.Sprite):
         # ボールと衝突したブロックリストを取得（Groupが格納しているSprite中から、指定したSpriteと接触しているものを探索）
 
         blocks_collided = pygame.sprite.spritecollide(self, self.blocks, True)
-
+        pygame.sprite.spritecollide(self, self.coins, True)
         vy=0
         Coin("fig/10.png", random.randint(0,1200), vy)
+
+        
         if blocks_collided:  # 衝突ブロックがある場合
             oldrect = self.rect
             for block in blocks_collided:
@@ -160,7 +163,7 @@ def main():
     # スプライトグループに追加    
     Paddle.containers = group
     Ball.containers = group
-    Coin.containers = group, blocks
+    Coin.containers = group, coins
     Block.containers = group, blocks
 
     # パドルの作成
@@ -173,7 +176,7 @@ def main():
 
 
     # ボールを作成
-    Ball("fig/ダウンロード.jpg",paddle, blocks,  15, 135, 45)
+    Ball("fig/ダウンロード.jpg",paddle, blocks,coins,  15, 135, 45)
     
     clock = pygame.time.Clock()
     
@@ -181,6 +184,7 @@ def main():
     while (1):
         clock.tick(60)      # フレームレート(60fps)
         screen.fill((255,255,255))
+        
         # 全てのスプライトグループを更新
         group.update()
         # 全てのスプライトグループを描画       
