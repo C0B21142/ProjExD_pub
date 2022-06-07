@@ -3,9 +3,10 @@ from pygame.locals import *
 import sys
 import math
 import pygame.mixer
+import random
 
 # 画面サイズ
-SCREEN = Rect(0, 0, 1600, 900)
+SCREEN = Rect(0, 0, 1290, 700)
 
 # パドルクラス
 class Paddle(pygame.sprite.Sprite):
@@ -22,7 +23,7 @@ class Paddle(pygame.sprite.Sprite):
 
 # ボールクラス
 class Ball(pygame.sprite.Sprite):
-    def __init__(self, filename, paddle, blocks, speed,angle_left, angle_right):
+    def __init__(self, filename, paddle, blocks,coins, speed,angle_left, angle_right):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,0.2)
@@ -31,6 +32,7 @@ class Ball(pygame.sprite.Sprite):
         self.dx = self.dy = 0  # ボールの速度
         self.paddle = paddle  # パドルへの参照
         self.blocks = blocks  # ブロックグループへの参照
+        self.coins  = coins
         self.update = self.start # ゲーム開始状態に更新
         self.speed = speed # ボールの初期速度
         self.angle_left = angle_left # パドルの反射方向(左端:135度）
@@ -54,10 +56,8 @@ class Ball(pygame.sprite.Sprite):
     def move(self):
         self.rect.centerx += self.dx
         self.rect.centery += self.dy
-        hp =3
-
         # 壁との反射
-        
+
         if self.rect.left < SCREEN.left:    # 左側
             self.rect.left = SCREEN.left
             self.dx = -self.dx              # 速度を反転
@@ -80,13 +80,19 @@ class Ball(pygame.sprite.Sprite):
 
         if self.rect.top > SCREEN.bottom:
             self.update = self.start                    # ボールを初期状態に
-            hp -= 1
+            hp = 3 - 1
             if hp == 0:
                 return
 
 
         # ボールと衝突したブロックリストを取得（Groupが格納しているSprite中から、指定したSpriteと接触しているものを探索）
+
         blocks_collided = pygame.sprite.spritecollide(self, self.blocks, True)
+        pygame.sprite.spritecollide(self, self.coins, True)
+        vy=0
+        Coin("fig/10.png", random.randint(0,1200), vy)
+
+
         if blocks_collided:  # 衝突ブロックがある場合
             oldrect = self.rect
             for block in blocks_collided:
@@ -94,7 +100,7 @@ class Ball(pygame.sprite.Sprite):
                 if oldrect.left < block.rect.left and oldrect.right < block.rect.right:
                     self.rect.right = block.rect.left
                     self.dx = -self.dx
-                    
+
                 # ボールが右からブロックへ衝突した場合
                 if block.rect.left < oldrect.left and block.rect.right < oldrect.right:
                     self.rect.left = block.rect.right
@@ -129,6 +135,20 @@ class Block(pygame.sprite.Sprite):
         self.rect.top = SCREEN.top + y * self.rect.height
 
 
+class Coin(pygame.sprite.Sprite):
+    def __init__(self, filename, vx, vy):
+        pygame.sprite.Sprite.__init__(self, self.containers)
+        self.image = pygame.image.load(filename).convert()
+        self.image = pygame.transform.rotozoom(self.image,0,0.3)
+        self.image.set_colorkey((0,0,0))
+        self.rect = self.image.get_rect()
+        # ブロックの左上座標
+        self.rect.left = SCREEN.left + vx * self.rect.width
+        self.rect.centery = vy
+    def update(self):
+        self.rect.centery +=1
+
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode(SCREEN.size)
@@ -141,11 +161,13 @@ def main():
     group = pygame.sprite.RenderUpdates()  
 
     # 衝突判定用のスプライトグループ
-    blocks = pygame.sprite.Group()   
+    blocks = pygame.sprite.Group() 
+    coins=  pygame.sprite.Group() 
 
     # スプライトグループに追加    
     Paddle.containers = group
     Ball.containers = group
+    Coin.containers = group, coins
     Block.containers = group, blocks
 
     # パドルの作成
@@ -158,13 +180,15 @@ def main():
 
 
     # ボールを作成
-    Ball("fig/ダウンロード.jpg",paddle, blocks,  15, 135, 45)
+    Ball("fig/ダウンロード.jpg",paddle, blocks,coins,  15, 135, 45)
     
     clock = pygame.time.Clock()
     
 
     while (1):
         clock.tick(60)      # フレームレート(60fps)
+        screen.fill((255,255,255))
+        
         # 背景真っ白から鳥取砂丘に
         # screen.fill((255,255,255))
         screen.blit(bg_img, bg_rect)
