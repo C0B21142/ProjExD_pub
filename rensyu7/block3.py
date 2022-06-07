@@ -131,6 +131,10 @@ class Block(pygame.sprite.Sprite):
 def main():
     pygame.init()
     screen = pygame.display.set_mode(SCREEN.size)
+    #C0B21094 背景画像を設定
+    bg_img = pygame.image.load("fig/toQtorisakjuR.jpg")
+    bg_rect = bg_img.get_rect()
+    screen.blit(bg_img, bg_rect)
 
     # 描画用のスプライトグループ
     group = pygame.sprite.RenderUpdates()  
@@ -160,7 +164,9 @@ def main():
 
     while (1):
         clock.tick(60)      # フレームレート(60fps)
-        screen.fill((255,255,255))
+        # 背景真っ白から鳥取砂丘に
+        # screen.fill((255,255,255))
+        screen.blit(bg_img, bg_rect)
         # 全てのスプライトグループを更新
         group.update()
         # 全てのスプライトグループを描画       
