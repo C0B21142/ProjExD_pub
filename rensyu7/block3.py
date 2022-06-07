@@ -26,6 +26,7 @@ class Ball(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,0.2)
+        self.image.set_colorkey((255, 255, 255))    #C0B21094
         self.rect = self.image.get_rect()
         self.dx = self.dy = 0  # ボールの速度
         self.paddle = paddle  # パドルへの参照
