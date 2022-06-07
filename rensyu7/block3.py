@@ -13,7 +13,7 @@ class Paddle(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = pygame.image.load(filename).convert()
         self.image = pygame.transform.rotozoom(self.image,0,2)
-        self.image.set_colorkey((0,0,0))
+        self.image.set_colorkey((0,0,0))                                            #中村太亮
         self.rect = self.image.get_rect()
         self.rect.bottom = SCREEN.bottom - 20          # パドルのy座標
 
@@ -166,10 +166,10 @@ def main():
         # 全てのスプライトグループを描画       
         group.draw(screen)
         # 画面更新 
-        if len(blocks) == 0:    #blockがなくなったら
-            clear = pygame.font.Font(None, 60)
-            text = clear.render("GAME CLEAR", True, (63, 255, 63))
-            screen.blit(text, (700, 450))
+        if len(blocks) == 0:                                       #\
+            clear = pygame.font.Font(None, 60)                     # 中村　太亮
+            text = clear.render("GAME CLEAR", True, (63, 255, 63)) #　ゲームクリア文字をの表示
+            screen.blit(text, (700, 450))                          #/
         pygame.display.update()
         # キーイベント（終了）
         for event in pygame.event.get():
