@@ -61,10 +61,9 @@ def load_sound(file):
         return None
     file = os.path.join(main_dir, "data", file)
     try:
-        sound = pg.mixer.Sound(file)
-        return sound
+        return pg.mixer.Sound(file)
     except pg.error:
-        print("Warning, unable to load, %s" % file)
+        print(f"Warning, unable to load, {file}")
     return None
 
 
@@ -319,14 +318,13 @@ def main(winstyle=0):
                         screen = pg.display.set_mode(
                             SCREENRECT.size, winstyle | pg.FULLSCREEN, bestdepth
                         )
-                        screen.blit(screen_backup, (0, 0))
                     else:
                         print("Changing to windowed mode")
                         screen_backup = screen.copy()
                         screen = pg.display.set_mode(
                             SCREENRECT.size, winstyle, bestdepth
                         )
-                        screen.blit(screen_backup, (0, 0))
+                    screen.blit(screen_backup, (0, 0))
                     pg.display.flip()
                     fullscreen = not fullscreen
 
